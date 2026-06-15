@@ -57,10 +57,22 @@ public class ProjectService : IProjectService
         var project = Projects.FirstOrDefault(p => p.Id == projectId);
         if (project == null) return;
 
-        if (project.IsActive)
-            ActiveProject = null;
-
         Projects.Remove(project);
+
+        if (project.IsActive)
+        {
+            var nextProject = Projects.FirstOrDefault();
+            if (nextProject != null)
+            {
+                nextProject.IsActive = true;
+                ActiveProject = nextProject;
+            }
+            else
+            {
+                ActiveProject = null;
+            }
+        }
+
         SaveProjects();
     }
 
@@ -69,7 +81,13 @@ public class ProjectService : IProjectService
         var project = Projects.FirstOrDefault(p => p.Id == projectId);
         if (project == null) return;
 
+        foreach (var item in Projects)
+        {
+            item.IsActive = item.Id == projectId;
+        }
+
         ActiveProject = project;
+        SaveProjects();
         ActiveProjectChanged?.Invoke(this, EventArgs.Empty);
     }
 
@@ -91,8 +109,22 @@ public class ProjectService : IProjectService
             };
             Projects = JsonSerializer.Deserialize<List<ProjectModel>>(json, options) ?? new List<ProjectModel>();
             
-            // Сбрасываем активный проект при загрузке (будет перезапущен пользователем)
-            ActiveProject = null;
+            var activeProject = Projects.FirstOrDefault(p => p.IsActive);
+
+            foreach (var project in Projects)
+            {
+                project.IsActive = false;
+            }
+
+            if (activeProject != null)
+            {
+                activeProject.IsActive = true;
+                ActiveProject = activeProject;
+            }
+            else
+            {
+                ActiveProject = null;
+            }
         }
         catch (Exception ex)
         {

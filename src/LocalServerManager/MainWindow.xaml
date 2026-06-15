@@ -18,19 +18,19 @@
             VerticalAlignment="Stretch"
             Padding="16">
             
-            <TabItem Header="Проекты">
+            <TabItem x:Name="ProjectsTab" Header="Проекты">
                 <views:ProjectsView/>
             </TabItem>
             
-            <TabItem Header="Сервер">
+            <TabItem x:Name="ServerTab" Header="Сервер">
                 <views:ServerView/>
             </TabItem>
             
-            <TabItem Header="Docker">
+            <TabItem x:Name="DockerTab" Header="Docker">
                 <views:DockerView/>
             </TabItem>
             
-            <TabItem Header="Настройки">
+            <TabItem x:Name="SettingsTab" Header="Настройки">
                 <views:SettingsView/>
             </TabItem>
         </TabControl>

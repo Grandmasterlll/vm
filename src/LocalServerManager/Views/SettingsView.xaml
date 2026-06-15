@@ -1,4 +1,4 @@
-<Window x:Class="LocalServerManager.Views.SettingsView"
+<UserControl x:Class="LocalServerManager.Views.SettingsView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,8 +7,7 @@
         xmlns:viewmodels="clr-namespace:LocalServerManager.ViewModels"
         mc:Ignorable="d" 
         d:DesignHeight="700" d:DesignWidth="1000"
-        Background="{DynamicResource MaterialDesignPaper}"
-        DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=SettingsViewModel}">
+        Background="{DynamicResource MaterialDesignPaper}">
     <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -234,4 +233,4 @@
                     Command="{Binding SaveSettingsCommand}"/>
         </StackPanel>
     </Grid>
-</Window>
+</UserControl>

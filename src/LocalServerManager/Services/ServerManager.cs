@@ -7,12 +7,18 @@ namespace LocalServerManager.Services;
 
 public class ServerManager : IServerManager
 {
+    private readonly ISettingsService _settingsService;
     private Process? _currentProcess;
     private CancellationTokenSource? _logReadCancellation;
 
     public ServerStatusModel Status { get; private set; } = new();
     public event EventHandler<string>? LogReceived;
     public event EventHandler? StatusChanged;
+
+    public ServerManager(ISettingsService settingsService)
+    {
+        _settingsService = settingsService;
+    }
 
     public async Task StartServerAsync(ProjectModel project, CancellationToken cancellationToken = default)
     {
@@ -30,12 +36,12 @@ public class ServerManager : IServerManager
 
             if (project.Type == ProjectType.Laravel)
             {
-                fileName = "php";
+                fileName = string.IsNullOrWhiteSpace(_settingsService.PhpPath) ? "php" : _settingsService.PhpPath;
                 arguments = $"artisan serve --host=127.0.0.1 --port={project.Port}";
             }
             else if (project.Type == ProjectType.Django)
             {
-                fileName = "python";
+                fileName = string.IsNullOrWhiteSpace(_settingsService.PythonPath) ? "python" : _settingsService.PythonPath;
                 arguments = $"manage.py runserver 127.0.0.1:{project.Port}";
             }
             else
@@ -145,10 +151,15 @@ public class ServerManager : IServerManager
     {
         try
         {
-            while (!token.IsCancellationRequested && !reader.EndOfStream)
+            while (!token.IsCancellationRequested)
             {
-                var line = await reader.ReadLineAsync();
-                if (line != null && !string.IsNullOrWhiteSpace(line))
+                var line = await reader.ReadLineAsync(token);
+                if (line == null)
+                {
+                    break;
+                }
+
+                if (!string.IsNullOrWhiteSpace(line))
                 {
                     LogReceived?.Invoke(this, $"[{prefix}] {line}");
                 }

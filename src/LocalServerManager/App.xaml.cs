@@ -13,7 +13,7 @@ namespace LocalServerManager;
 /// </summary>
 public partial class App : Application
 {
-    private IServiceProvider _serviceProvider;
+    private IServiceProvider? _serviceProvider;
 
     private void OnStartup(object sender, StartupEventArgs e)
     {
@@ -40,6 +40,8 @@ public partial class App : Application
             // Инициализация системного трея
             var trayIconService = _serviceProvider.GetRequiredService<ITrayIconService>();
             trayIconService.Initialize();
+
+            _ = AutoStartActiveProjectAsync();
         }
         catch (Exception ex)
         {
@@ -48,6 +50,31 @@ public partial class App : Application
         finally
         {
             Log.CloseAndFlush();
+        }
+    }
+
+    private async Task AutoStartActiveProjectAsync()
+    {
+        if (_serviceProvider == null)
+            return;
+
+        var settingsService = _serviceProvider.GetRequiredService<ISettingsService>();
+        if (!settingsService.AutoStartLastProject)
+            return;
+
+        var projectService = _serviceProvider.GetRequiredService<IProjectService>();
+        var activeProject = projectService.ActiveProject;
+        if (activeProject == null)
+            return;
+
+        try
+        {
+            var serverManager = _serviceProvider.GetRequiredService<IServerManager>();
+            await serverManager.StartServerAsync(activeProject);
+        }
+        catch (Exception ex)
+        {
+            Log.Warning(ex, "Не удалось автоматически запустить активный проект");
         }
     }
 

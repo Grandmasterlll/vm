@@ -1,4 +1,4 @@
-<Window x:Class="LocalServerManager.Views.ServerView"
+<UserControl x:Class="LocalServerManager.Views.ServerView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -135,4 +135,4 @@
                        Foreground="{DynamicResource MaterialDesignBodyLight}"/>
         </StackPanel>
     </Grid>
-</Window>
+</UserControl>
