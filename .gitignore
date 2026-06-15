@@ -1,0 +1,40 @@
+# Build output
+bin/
+obj/
+*/bin/
+*/obj/
+
+# Logs
+logs/
+*.log
+logs/log-*.txt
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Rider
+.idea/
+
+# Windows
+.DS_Store
+Thumbs.db
+
+# Configuration (optional - uncomment if you want to commit)
+# appsettings.json
+# projects.json
+
+# Test results
+TestResults/
+*.coverage
+*.opencover.xml
+
+# Temporary files
+*.tmp
+*.temp
