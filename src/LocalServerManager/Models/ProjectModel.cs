@@ -40,6 +40,5 @@ public class ContainerModel
     public string Name { get; set; } = string.Empty;
     public string State { get; set; } = string.Empty;
     public string Image { get; set; } = string.Empty;
-    public string[]? Names { get; set; }
-    public DateTime Created { get; set; }
+    public List<string>? Names { get; set; }
 }

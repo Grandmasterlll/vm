@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:viewmodels="clr-namespace:LocalServerManager.ViewModels"
         mc:Ignorable="d" 
         d:DesignHeight="600" d:DesignWidth="1000"
         Background="{DynamicResource MaterialDesignPaper}">
@@ -22,25 +23,30 @@
                        Foreground="{DynamicResource MaterialDesignBody}"
                        VerticalAlignment="Center"/>
             <StackPanel Orientation="Horizontal" Margin="16,0,0,0">
-                <Button Content="Обновить" 
+                <Button Command="{Binding RefreshContainersCommand}"
+                        Content="Обновить" 
                         materialDesign:ButtonAssist.CornerRadius="4"
                         Padding="16,8"
                         Margin="0,0,8,0"/>
-                <Button Content="Запустить" 
+                <Button Command="{Binding StartContainerCommand}"
+                        Content="Запустить" 
                         materialDesign:ButtonAssist.CornerRadius="4"
                         Padding="16,8"
                         Margin="0,0,8,0"/>
-                <Button Content="Остановить" 
+                <Button Command="{Binding StopContainerCommand}"
+                        Content="Остановить" 
                         materialDesign:ButtonAssist.CornerRadius="4"
                         Padding="16,8"
                         Margin="0,0,8,0"/>
-                <ToggleButton x:Name="ShowAllContainers"
-                              Margin="8,0,0,0">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="FormatListBulleted" Width="20" Height="20"/>
-                        <TextBlock Text="Все" Margin="4,0,0,0"/>
-                    </StackPanel>
-                </ToggleButton>
+                <Button Command="{Binding RemoveContainerCommand}"
+                        Content="Удалить" 
+                        materialDesign:ButtonAssist.CornerRadius="4"
+                        Padding="16,8"
+                        Margin="0,0,8,0"/>
+                <Button Command="{Binding ShowLogsCommand}"
+                        Content="Логи" 
+                        materialDesign:ButtonAssist.CornerRadius="4"
+                        Padding="16,8"/>
             </StackPanel>
         </StackPanel>
 
@@ -50,7 +56,9 @@
                 CornerRadius="4"
                 Padding="16"
                 Margin="0,0,0,16">
-            <ListBox SelectionMode="Single">
+            <ListBox ItemsSource="{Binding Containers}"
+                     SelectedItem="{Binding Selected}"
+                     SelectionMode="Single">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
                         <Setter Property="Padding" Value="12"/>
@@ -58,104 +66,50 @@
                     </Style>
                 </ListBox.ItemContainerStyle>
 
-                <!-- Контейнер 1 -->
-                <Border Padding="12" 
-                        Background="{DynamicResource MaterialDesignPaper}"
-                        CornerRadius="4"
-                        Margin="0,2">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="12" 
+                                Background="{DynamicResource MaterialDesignPaper}"
+                                CornerRadius="4"
+                                Margin="0,2">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
 
-                        <!-- Статус -->
-                        <materialDesign:PackIcon Kind="Container" 
-                                                 Width="32" Height="32"
-                                                 Foreground="#FF2196F3"
-                                                 VerticalAlignment="Center"/>
+                                <!-- Статус -->
+                                <materialDesign:PackIcon Kind="Container" 
+                                                         Width="32" Height="32"
+                                                         Foreground="#FF2196F3"
+                                                         VerticalAlignment="Center"/>
 
-                        <!-- Информация -->
-                        <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                            <TextBlock Text="mysql-container" 
-                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                                       Foreground="{DynamicResource MaterialDesignBody}"/>
-                            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-                                <materialDesign:Chip Content="running" 
-                                                     Background="#FF4CAF50"
-                                                     Margin="0,0,8,0"/>
-                                <TextBlock Text="mysql:8.0" 
-                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
-                                           Foreground="{DynamicResource MaterialDesignBodyLight}"/>
-                            </StackPanel>
-                            <TextBlock Text="Создан: 2 часа назад" 
-                                       Style="{StaticResource MaterialDesignCaptionTextBlock}"
-                                       Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                       Margin="0,4,0,0"/>
-                        </StackPanel>
+                                <!-- Информация -->
+                                <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                                    <TextBlock Text="{Binding Name}" 
+                                               Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                               Foreground="{DynamicResource MaterialDesignBody}"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                        <materialDesign:Chip Content="{Binding State}" 
+                                                             Background="{Binding StateColor}"
+                                                             Margin="0,0,8,0"/>
+                                        <TextBlock Text="{Binding Image}" 
+                                                   Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                                   Foreground="{DynamicResource MaterialDesignBodyLight}"/>
+                                    </StackPanel>
+                                </StackPanel>
 
-                        <!-- Кнопки действий -->
-                        <StackPanel Grid.Column="2" Orientation="Horizontal">
-                            <Button Content="Логи" 
-                                    Style="{StaticResource MaterialDesignFlatButton}"
-                                    Padding="8,4"
-                                    Margin="0,0,4,0"/>
-                            <Button Content="Стоп" 
-                                    Style="{StaticResource MaterialDesignFlatButton}"
-                                    Foreground="#FFF44336"
-                                    Padding="8,4"/>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-
-                <!-- Контейнер 2 -->
-                <Border Padding="12" 
-                        Background="{DynamicResource MaterialDesignPaper}"
-                        CornerRadius="4"
-                        Margin="0,2">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <materialDesign:PackIcon Kind="Container" 
-                                                 Width="32" Height="32"
-                                                 Foreground="#FF9E9E9E"
-                                                 VerticalAlignment="Center"/>
-
-                        <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                            <TextBlock Text="redis-cache" 
-                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                                       Foreground="{DynamicResource MaterialDesignBody}"/>
-                            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-                                <materialDesign:Chip Content="exited" 
-                                                     Background="#FFF44336"
-                                                     Margin="0,0,8,0"/>
-                                <TextBlock Text="redis:7-alpine" 
-                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
-                                           Foreground="{DynamicResource MaterialDesignBodyLight}"/>
-                            </StackPanel>
-                            <TextBlock Text="Создан: 1 день назад" 
-                                       Style="{StaticResource MaterialDesignCaptionTextBlock}"
-                                       Foreground="{DynamicResource MaterialDesignBodyLight}"
-                                       Margin="0,4,0,0"/>
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="2" Orientation="Horizontal">
-                            <Button Content="Логи" 
-                                    Style="{StaticResource MaterialDesignFlatButton}"
-                                    Padding="8,4"
-                                    Margin="0,0,4,0"/>
-                            <Button Content="Старт" 
-                                    Style="{StaticResource MaterialDesignFlatButton}"
-                                    Foreground="#FF4CAF50"
-                                    Padding="8,4"/>
-                        </StackPanel>
-                    </Grid>
-                </Border>
+                                <!-- Статус бар -->
+                                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                    <TextBlock Text="{Binding State, StringFormat='Состояние: {0}'}" 
+                                               Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                               Foreground="{DynamicResource MaterialDesignBodyLight}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
         </Border>
 
@@ -170,16 +124,19 @@
                 Background="#FF1E1E1E"
                 CornerRadius="4"
                 Padding="16">
-            <ScrollViewer materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True">
-                <TextBox TextWrapping="Wrap"
-                         AcceptsReturn="True"
-                         IsReadOnly="True"
-                         FontFamily="Consolas"
-                         FontSize="12"
-                         Foreground="#FF90EE90"
-                         Background="Transparent"
-                         BorderThickness="0"
-                         VerticalScrollBarVisibility="Auto"/>
+            <ScrollViewer materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
+                          VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Logs}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" 
+                                       FontFamily="Consolas"
+                                       FontSize="12"
+                                       Foreground="#FF90EE90"
+                                       TextWrapping="Wrap"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </ScrollViewer>
         </Border>
 
@@ -191,11 +148,11 @@
                                      Width="16" Height="16"
                                      Foreground="#FF2196F3"
                                      VerticalAlignment="Center"/>
-            <TextBlock Text="Docker Desktop: Подключено" 
+            <TextBlock Text="{Binding DockerStatusText}" 
                        Style="{StaticResource MaterialDesignBody2TextBlock}"
                        Foreground="{DynamicResource MaterialDesignBodyLight}"
                        Margin="4,0,16,0"/>
-            <TextBlock Text="• 2 контейнера (1 запущен)" 
+            <TextBlock Text="{Binding Containers.Count, StringFormat='• {0} контейнера(ов)'}" 
                        Style="{StaticResource MaterialDesignBody2TextBlock}"
                        Foreground="{DynamicResource MaterialDesignBodyLight}"/>
         </StackPanel>

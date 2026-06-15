@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using LocalServerManager.Services;
 using LocalServerManager.ViewModels;
+using Application = System.Windows.Application;
 
 namespace LocalServerManager;
 
@@ -35,6 +36,10 @@ public partial class App : Application
             // Показ главного окна через сервис
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
+
+            // Инициализация системного трея
+            var trayIconService = _serviceProvider.GetRequiredService<ITrayIconService>();
+            trayIconService.Initialize();
         }
         catch (Exception ex)
         {
@@ -51,14 +56,20 @@ public partial class App : Application
         // Сервисы
         services.AddSingleton<IProjectService, ProjectService>();
         services.AddSingleton<IServerManager, ServerManager>();
-        // services.AddSingleton<IDockerService, DockerService>();
-        // services.AddSingleton<ISettingsService, SettingsService>();
+        services.AddSingleton<IDockerService, DockerService>();
+        services.AddSingleton<ITrayIconService, TrayIconService>();
+        services.AddSingleton<ISettingsService, SettingsService>();
         // services.AddSingleton<ILogService, LogService>();
 
         // ViewModels
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<ProjectsViewModel>();
         services.AddSingleton<ServerViewModel>();
+        services.AddSingleton<DockerViewModel>();
+        services.AddSingleton<SettingsViewModel>();
+
+        // ViewModel Locator
+        services.AddSingleton<ViewModelLocator>();
 
         // Главное окно
         services.AddTransient<MainWindow>();
@@ -67,6 +78,14 @@ public partial class App : Application
     protected override void OnExit(ExitEventArgs e)
     {
         Log.Information("Приложение закрывается...");
+        
+        // Очистка системного трея
+        if (_serviceProvider != null)
+        {
+            var trayIconService = _serviceProvider.GetService<ITrayIconService>();
+            (trayIconService as IDisposable)?.Dispose();
+        }
+        
         Log.CloseAndFlush();
         base.OnExit(e);
     }

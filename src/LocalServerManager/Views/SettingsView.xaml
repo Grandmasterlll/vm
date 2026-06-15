@@ -4,9 +4,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:viewmodels="clr-namespace:LocalServerManager.ViewModels"
         mc:Ignorable="d" 
-        d:DesignHeight="600" d:DesignWidth="1000"
-        Background="{DynamicResource MaterialDesignPaper}">
+        d:DesignHeight="700" d:DesignWidth="1000"
+        Background="{DynamicResource MaterialDesignPaper}"
+        DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=SettingsViewModel}">
     <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -44,24 +46,21 @@
                                        Width="150"
                                        VerticalAlignment="Center"/>
                             <ComboBox Width="200" 
-                                      SelectedIndex="0"
+                                      SelectedItem="{Binding Theme}"
                                       materialDesign:HintAssist.Hint="Выберите тему">
-                                <ComboBoxItem Content="Тёмная"/>
-                                <ComboBoxItem Content="Светлая"/>
+                                <ComboBoxItem Content="Dark"/>
+                                <ComboBoxItem Content="Light"/>
                             </ComboBox>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Margin="0,8">
-                            <TextBlock Text="Язык" 
+                            <TextBlock Text="Минимизировать в трей при закрытии" 
                                        Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
                                        Foreground="{DynamicResource MaterialDesignBody}"
-                                       Width="150"
+                                       Width="200"
                                        VerticalAlignment="Center"/>
-                            <ComboBox Width="200" 
-                                      SelectedIndex="0">
-                                <ComboBoxItem Content="Русский"/>
-                                <ComboBoxItem Content="English"/>
-                            </ComboBox>
+                            <CheckBox IsChecked="{Binding MinimizeToTrayOnClose}"
+                                      Margin="8,0,0,0"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -85,12 +84,14 @@
                                        VerticalAlignment="Center"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                 <TextBox Width="500" 
+                                         Text="{Binding PhpPath, UpdateSourceTrigger=PropertyChanged}"
                                          materialDesign:HintAssist.Hint="Путь к PHP.exe"
                                          materialDesign:TextFieldAssist.HasClearButton="True"/>
                                 <Button Content="Обзор" 
                                         Style="{StaticResource MaterialDesignFlatButton}"
                                         Padding="16,8"
-                                        Margin="8,0,0,0"/>
+                                        Margin="8,0,0,0"
+                                        Command="{Binding BrowsePhpPathCommand}"/>
                             </StackPanel>
                         </StackPanel>
 
@@ -102,12 +103,14 @@
                                        VerticalAlignment="Center"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                 <TextBox Width="500" 
+                                         Text="{Binding PythonPath, UpdateSourceTrigger=PropertyChanged}"
                                          materialDesign:HintAssist.Hint="Путь к Python.exe"
                                          materialDesign:TextFieldAssist.HasClearButton="True"/>
                                 <Button Content="Обзор" 
                                         Style="{StaticResource MaterialDesignFlatButton}"
                                         Padding="16,8"
-                                        Margin="8,0,0,0"/>
+                                        Margin="8,0,0,0"
+                                        Command="{Binding BrowsePythonPathCommand}"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -131,7 +134,7 @@
                                        Width="150"
                                        VerticalAlignment="Center"/>
                             <TextBox Width="200" 
-                                     Text="8000"
+                                     Text="{Binding DefaultPort, UpdateSourceTrigger=PropertyChanged}"
                                      materialDesign:HintAssist.Hint="Порт"/>
                         </StackPanel>
 
@@ -139,10 +142,10 @@
                             <TextBlock Text="Автозапуск проекта" 
                                        Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
                                        Foreground="{DynamicResource MaterialDesignBody}"
-                                       Width="150"
+                                       Width="200"
                                        VerticalAlignment="Center"/>
-                            <ToggleButton x:Name="AutoStartToggle"
-                                          Margin="8,0,0,0"/>
+                            <CheckBox IsChecked="{Binding AutoStartLastProject}"
+                                      Margin="8,0,0,0"/>
                             <TextBlock Text="Запускать последний активный проект при старте" 
                                        Style="{StaticResource MaterialDesignBody2TextBlock}"
                                        Foreground="{DynamicResource MaterialDesignBodyLight}"
@@ -170,7 +173,7 @@
                                        Width="150"
                                        VerticalAlignment="Center"/>
                             <TextBox Width="500" 
-                                     Text="npipe://./pipe/docker_engine"
+                                     Text="{Binding DockerUri, UpdateSourceTrigger=PropertyChanged}"
                                      materialDesign:TextFieldAssist.HasClearButton="True"/>
                         </StackPanel>
 
@@ -181,19 +184,8 @@
                                        Width="150"
                                        VerticalAlignment="Center"/>
                             <TextBox Width="200" 
-                                     Text="60"
+                                     Text="{Binding DockerTimeout, UpdateSourceTrigger=PropertyChanged}"
                                      materialDesign:HintAssist.Hint="Таймаут"/>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal" Margin="0,8">
-                            <TextBlock Text="Проверка подключения" 
-                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                                       Foreground="{DynamicResource MaterialDesignBody}"
-                                       Width="150"
-                                       VerticalAlignment="Center"/>
-                            <Button Content="Проверить" 
-                                    Style="{StaticResource MaterialDesignRaisedButton}"
-                                    Padding="16,8"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -208,20 +200,6 @@
                                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"
                                    Foreground="{DynamicResource MaterialDesignPrimary}"
                                    Margin="0,0,0,16"/>
-
-                        <StackPanel Orientation="Horizontal" Margin="0,8">
-                            <TextBlock Text="Уровень логов" 
-                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                                       Foreground="{DynamicResource MaterialDesignBody}"
-                                       Width="150"
-                                       VerticalAlignment="Center"/>
-                            <ComboBox Width="200" SelectedIndex="1">
-                                <ComboBoxItem Content="Debug"/>
-                                <ComboBoxItem Content="Information"/>
-                                <ComboBoxItem Content="Warning"/>
-                                <ComboBoxItem Content="Error"/>
-                            </ComboBox>
-                        </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Margin="0,8">
                             <TextBlock Text="Путь к логам" 
@@ -244,14 +222,16 @@
                     Orientation="Horizontal" 
                     HorizontalAlignment="Right"
                     Margin="0,24,0,0">
-            <Button Content="Отмена" 
+            <Button Content="Сбросить" 
                     Style="{StaticResource MaterialDesignFlatButton}"
                     Padding="24,12"
-                    Margin="0,0,8,0"/>
+                    Margin="0,0,8,0"
+                    Command="{Binding ResetSettingsCommand}"/>
             <Button Content="Сохранить" 
                     Style="{StaticResource MaterialDesignRaisedButton}"
                     Background="#FF4CAF50"
-                    Padding="24,12"/>
+                    Padding="24,12"
+                    Command="{Binding SaveSettingsCommand}"/>
         </StackPanel>
     </Grid>
 </Window>
