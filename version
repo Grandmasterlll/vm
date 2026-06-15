@@ -1,0 +1,61 @@
+# Версии проекта LocalServerManager
+
+---
+
+## [0.2.0] - 2024-XX-XX
+### Добавлено
+- Создана базовая архитектура MVVM
+- Настроен DI-контейнер (Microsoft.Extensions.DependencyInjection)
+- Установлены NuGet пакеты:
+  - CommunityToolkit.Mvvm 8.2.2
+  - MaterialDesignThemes 4.9.0
+  - Hardcodet.NotifyIcon.Wpf 1.1.0
+  - Docker.DotNet 3.125.15
+  - Serilog 3.1.1 + Serilog.Sinks.File 5.0.0 + Serilog.Sinks.Console 5.0.1
+- Созданы модели: ProjectModel, ServerStatusModel, ContainerModel
+- Создан интерфейс IProjectService и базовая реализация ProjectService
+- Создан базовый ViewModel класс (BaseViewModel)
+- Настроено главное окно с Material Design и вкладками
+- Настроено логирование через Serilog
+
+### Изменено
+- -
+
+### Удалено
+- -
+
+### Известные проблемы
+- -
+
+---
+
+## [0.1.0] - 2024-XX-XX
+### Добавлено
+- Инициализация проекта .NET WPF
+- Базовая архитектура MVVM
+- Настройка DI-контейнера
+
+### Изменено
+- -
+
+### Удалено
+- -
+
+### Известные проблемы
+- -
+
+---
+
+## [0.0.1] - 2024-XX-XX
+### Добавлено
+- Создание файла версионирования
+- Создание файла этапов разработки
+
+### Изменено
+- -
+
+### Удалено
+- -
+
+### Известные проблемы
+- -

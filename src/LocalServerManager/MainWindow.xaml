@@ -1,0 +1,60 @@
+﻿<Window x:Class="LocalServerManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Local Server Manager" 
+        Height="600" 
+        Width="1000"
+        materialDesign:ThemeAssist.Theme="Dark"
+        Background="{DynamicResource MaterialDesignPaper}">
+    <Grid>
+        <TabControl 
+            materialDesign:ColorZoneAssist.Mode="PrimaryMid"
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch">
+
+            <TabItem Header="Проекты">
+                <Grid Margin="16">
+                    <TextBlock Text="Вкладка проектов (Этап 5)" 
+                               FontSize="18" 
+                               Foreground="{DynamicResource MaterialDesignBody}" 
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center"/>
+                </Grid>
+            </TabItem>
+            
+            <TabItem Header="Сервер">
+                <Grid Margin="16">
+                    <TextBlock Text="Вкладка сервера (Этап 6)" 
+                               FontSize="18" 
+                               Foreground="{DynamicResource MaterialDesignBody}" 
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center"/>
+                </Grid>
+            </TabItem>
+            
+            <TabItem Header="Docker">
+                <Grid Margin="16">
+                    <TextBlock Text="Вкладка Docker (Этап 7)" 
+                               FontSize="18" 
+                               Foreground="{DynamicResource MaterialDesignBody}" 
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center"/>
+                </Grid>
+            </TabItem>
+            
+            <TabItem Header="Настройки">
+                <Grid Margin="16">
+                    <TextBlock Text="Вкладка настроек (Этап 9)" 
+                               FontSize="18" 
+                               Foreground="{DynamicResource MaterialDesignBody}" 
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
