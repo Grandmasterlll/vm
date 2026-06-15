@@ -1,0 +1,257 @@
+<Window x:Class="LocalServerManager.Views.SettingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" 
+        d:DesignHeight="600" d:DesignWidth="1000"
+        Background="{DynamicResource MaterialDesignPaper}">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0" 
+                   Text="Настройки" 
+                   Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                   Foreground="{DynamicResource MaterialDesignBody}"
+                   Margin="0,0,0,24"/>
+
+        <!-- Содержимое настроек -->
+        <ScrollViewer Grid.Row="1" 
+                      materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
+                      VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Секция: Интерфейс -->
+                <Border Background="{DynamicResource MaterialDesignCardBackground}"
+                        CornerRadius="8"
+                        Padding="24"
+                        Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock Text="Интерфейс" 
+                                   Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                   Foreground="{DynamicResource MaterialDesignPrimary}"
+                                   Margin="0,0,0,16"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,8">
+                            <TextBlock Text="Тема" 
+                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                       Foreground="{DynamicResource MaterialDesignBody}"
+                                       Width="150"
+                                       VerticalAlignment="Center"/>
+                            <ComboBox Width="200" 
+                                      SelectedIndex="0"
+                                      materialDesign:HintAssist.Hint="Выберите тему">
+                                <ComboBoxItem Content="Тёмная"/>
+                                <ComboBoxItem Content="Светлая"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,8">
+                            <TextBlock Text="Язык" 
+                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                       Foreground="{DynamicResource MaterialDesignBody}"
+                                       Width="150"
+                                       VerticalAlignment="Center"/>
+                            <ComboBox Width="200" 
+                                      SelectedIndex="0">
+                                <ComboBoxItem Content="Русский"/>
+                                <ComboBoxItem Content="English"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Секция: Пути исполняемых файлов -->
+                <Border Background="{DynamicResource MaterialDesignCardBackground}"
+                        CornerRadius="8"
+                        Padding="24"
+                        Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock Text="Пути исполняемых файлов" 
+                                   Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                   Foreground="{DynamicResource MaterialDesignPrimary}"
+                                   Margin="0,0,0,16"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,8">
+                            <TextBlock Text="PHP.exe" 
+                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                       Foreground="{DynamicResource MaterialDesignBody}"
+                                       Width="150"
+                                       VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                <TextBox Width="500" 
+                                         materialDesign:HintAssist.Hint="Путь к PHP.exe"
+                                         materialDesign:TextFieldAssist.HasClearButton="True"/>
+                                <Button Content="Обзор" 
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        Padding="16,8"
+                                        Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,8">
+                            <TextBlock Text="Python.exe" 
+                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                       Foreground="{DynamicResource MaterialDesignBody}"
+                                       Width="150"
+                                       VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                <TextBox Width="500" 
+                                         materialDesign:HintAssist.Hint="Путь к Python.exe"
+                                         materialDesign:TextFieldAssist.HasClearButton="True"/>
+                                <Button Content="Обзор" 
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        Padding="16,8"
+                                        Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Секция: Сервер -->
+                <Border Background="{DynamicResource MaterialDesignCardBackground}"
+                        CornerRadius="8"
+                        Padding="24"
+                        Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock Text="Сервер" 
+                                   Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                   Foreground="{DynamicResource MaterialDesignPrimary}"
+                                   Margin="0,0,0,16"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,8">
+                            <TextBlock Text="Порт по умолчанию" 
+                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                       Foreground="{DynamicResource MaterialDesignBody}"
+                                       Width="150"
+                                       VerticalAlignment="Center"/>
+                            <TextBox Width="200" 
+                                     Text="8000"
+                                     materialDesign:HintAssist.Hint="Порт"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,8">
+                            <TextBlock Text="Автозапуск проекта" 
+                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                       Foreground="{DynamicResource MaterialDesignBody}"
+                                       Width="150"
+                                       VerticalAlignment="Center"/>
+                            <ToggleButton x:Name="AutoStartToggle"
+                                          Margin="8,0,0,0"/>
+                            <TextBlock Text="Запускать последний активный проект при старте" 
+                                       Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                       Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                       Margin="12,0,0,0"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Секция: Docker -->
+                <Border Background="{DynamicResource MaterialDesignCardBackground}"
+                        CornerRadius="8"
+                        Padding="24"
+                        Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock Text="Docker" 
+                                   Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                   Foreground="{DynamicResource MaterialDesignPrimary}"
+                                   Margin="0,0,0,16"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,8">
+                            <TextBlock Text="URI Docker" 
+                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                       Foreground="{DynamicResource MaterialDesignBody}"
+                                       Width="150"
+                                       VerticalAlignment="Center"/>
+                            <TextBox Width="500" 
+                                     Text="npipe://./pipe/docker_engine"
+                                     materialDesign:TextFieldAssist.HasClearButton="True"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,8">
+                            <TextBlock Text="Таймаут (сек)" 
+                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                       Foreground="{DynamicResource MaterialDesignBody}"
+                                       Width="150"
+                                       VerticalAlignment="Center"/>
+                            <TextBox Width="200" 
+                                     Text="60"
+                                     materialDesign:HintAssist.Hint="Таймаут"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,8">
+                            <TextBlock Text="Проверка подключения" 
+                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                       Foreground="{DynamicResource MaterialDesignBody}"
+                                       Width="150"
+                                       VerticalAlignment="Center"/>
+                            <Button Content="Проверить" 
+                                    Style="{StaticResource MaterialDesignRaisedButton}"
+                                    Padding="16,8"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Секция: Логи -->
+                <Border Background="{DynamicResource MaterialDesignCardBackground}"
+                        CornerRadius="8"
+                        Padding="24"
+                        Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock Text="Логирование" 
+                                   Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                   Foreground="{DynamicResource MaterialDesignPrimary}"
+                                   Margin="0,0,0,16"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,8">
+                            <TextBlock Text="Уровень логов" 
+                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                       Foreground="{DynamicResource MaterialDesignBody}"
+                                       Width="150"
+                                       VerticalAlignment="Center"/>
+                            <ComboBox Width="200" SelectedIndex="1">
+                                <ComboBoxItem Content="Debug"/>
+                                <ComboBoxItem Content="Information"/>
+                                <ComboBoxItem Content="Warning"/>
+                                <ComboBoxItem Content="Error"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,8">
+                            <TextBlock Text="Путь к логам" 
+                                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                       Foreground="{DynamicResource MaterialDesignBody}"
+                                       Width="150"
+                                       VerticalAlignment="Center"/>
+                            <TextBox Width="500" 
+                                     Text="logs/"
+                                     IsReadOnly="True"
+                                     materialDesign:TextFieldAssist.HasClearButton="True"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Кнопки сохранения -->
+        <StackPanel Grid.Row="2" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Right"
+                    Margin="0,24,0,0">
+            <Button Content="Отмена" 
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    Padding="24,12"
+                    Margin="0,0,8,0"/>
+            <Button Content="Сохранить" 
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Background="#FF4CAF50"
+                    Padding="24,12"/>
+        </StackPanel>
+    </Grid>
+</Window>

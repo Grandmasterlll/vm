@@ -4,56 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:views="clr-namespace:LocalServerManager.Views"
         mc:Ignorable="d"
         Title="Local Server Manager" 
-        Height="600" 
-        Width="1000"
+        Height="700" 
+        Width="1100"
         materialDesign:ThemeAssist.Theme="Dark"
         Background="{DynamicResource MaterialDesignPaper}">
     <Grid>
         <TabControl 
             materialDesign:ColorZoneAssist.Mode="PrimaryMid"
             HorizontalAlignment="Stretch" 
-            VerticalAlignment="Stretch">
-
+            VerticalAlignment="Stretch"
+            Padding="16">
+            
             <TabItem Header="Проекты">
-                <Grid Margin="16">
-                    <TextBlock Text="Вкладка проектов (Этап 5)" 
-                               FontSize="18" 
-                               Foreground="{DynamicResource MaterialDesignBody}" 
-                               HorizontalAlignment="Center" 
-                               VerticalAlignment="Center"/>
-                </Grid>
+                <views:ProjectsView/>
             </TabItem>
             
             <TabItem Header="Сервер">
-                <Grid Margin="16">
-                    <TextBlock Text="Вкладка сервера (Этап 6)" 
-                               FontSize="18" 
-                               Foreground="{DynamicResource MaterialDesignBody}" 
-                               HorizontalAlignment="Center" 
-                               VerticalAlignment="Center"/>
-                </Grid>
+                <views:ServerView/>
             </TabItem>
             
             <TabItem Header="Docker">
-                <Grid Margin="16">
-                    <TextBlock Text="Вкладка Docker (Этап 7)" 
-                               FontSize="18" 
-                               Foreground="{DynamicResource MaterialDesignBody}" 
-                               HorizontalAlignment="Center" 
-                               VerticalAlignment="Center"/>
-                </Grid>
+                <views:DockerView/>
             </TabItem>
             
             <TabItem Header="Настройки">
-                <Grid Margin="16">
-                    <TextBlock Text="Вкладка настроек (Этап 9)" 
-                               FontSize="18" 
-                               Foreground="{DynamicResource MaterialDesignBody}" 
-                               HorizontalAlignment="Center" 
-                               VerticalAlignment="Center"/>
-                </Grid>
+                <views:SettingsView/>
             </TabItem>
         </TabControl>
     </Grid>

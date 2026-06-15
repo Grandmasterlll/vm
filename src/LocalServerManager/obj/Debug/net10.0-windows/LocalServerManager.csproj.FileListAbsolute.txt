@@ -33,3 +33,15 @@ C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\obj\Debug\net10.0
 C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\obj\Debug\net10.0-windows\LocalServerManager.pdb
 C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\obj\Debug\net10.0-windows\LocalServerManager.genruntimeconfig.cache
 C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\obj\Debug\net10.0-windows\ref\LocalServerManager.dll
+C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\obj\Debug\net10.0-windows\Views\ServerView.baml
+C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\obj\Debug\net10.0-windows\Views\ServerView.g.cs
+C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\obj\Debug\net10.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\obj\Debug\net10.0-windows\Views\SettingsView.baml
+C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\obj\Debug\net10.0-windows\Views\SettingsView.g.cs
+C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\obj\Debug\net10.0-windows\Views\ProjectsView.baml
+C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\obj\Debug\net10.0-windows\Views\ProjectsView.g.cs
+C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\obj\Debug\net10.0-windows\Views\DockerView.baml
+C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\obj\Debug\net10.0-windows\Views\DockerView.g.cs
+C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\obj\Debug\net10.0-windows\LocalServerManager.sourcelink.json
+C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\bin\Debug\net10.0-windows\System.Management.dll
+C:\Users\GrandMasterlll\Desktop\Cont\vm\src\LocalServerManager\bin\Debug\net10.0-windows\runtimes\win\lib\net8.0\System.Management.dll

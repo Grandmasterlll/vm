@@ -50,13 +50,15 @@ public partial class App : Application
     {
         // Сервисы
         services.AddSingleton<IProjectService, ProjectService>();
-        // services.AddSingleton<IServerManager, ServerManager>();
+        services.AddSingleton<IServerManager, ServerManager>();
         // services.AddSingleton<IDockerService, DockerService>();
         // services.AddSingleton<ISettingsService, SettingsService>();
         // services.AddSingleton<ILogService, LogService>();
 
         // ViewModels
         services.AddSingleton<MainViewModel>();
+        services.AddSingleton<ProjectsViewModel>();
+        services.AddSingleton<ServerViewModel>();
 
         // Главное окно
         services.AddTransient<MainWindow>();
